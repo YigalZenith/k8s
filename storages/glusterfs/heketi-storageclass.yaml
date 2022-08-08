@@ -1,0 +1,15 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: glusterfs
+  namespace: kube-system
+parameters:
+  resturl: "http://192.168.2.104:8080"           # heketi的地址
+  clusterid: "e4103ad7f36a190bd613068e5d53a7e4"  # 在heketi节点使用heketi-cli cluster list命令返回的集群id
+  restauthenabled: "true" 
+  restuser: "admin"                 # heketi配置文件中创建的用户密
+  secretName: "heketi-secret"       # 与secret资源中定义一致
+  secretNamespace: "kube-system"    # 与secret资源中定义一致
+  volumetype: none 
+provisioner: kubernetes.io/glusterfs
+reclaimPolicy: Delete
